@@ -1,10 +1,11 @@
 import React from 'react';
 
-import GlobalStyle from './stles/global';
+import SignIn from './pages/Signin';
+import GlobalStyle from './sytles/global';
 
 const App: React.FC = () => (
   <>
-    <h1>Hello World</h1>
+    <SignIn />
     <GlobalStyle />
   </>
 );
