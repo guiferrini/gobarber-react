@@ -1,7 +1,24 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+import imagem from '../../Assets/sign-in-background.png';
 
-export const Content = styled.div``;
+export const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: stretch
+`;
 
-export const Background = styled.div``;
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+
+  width: 100%;
+  max-width: 700px;
+`;
+
+export const Background = styled.div`
+  flex: 1;
+  background: url(${imagem}) no-repeat center;
+  background-size: cover;
+`;
