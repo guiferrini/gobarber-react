@@ -87,6 +87,7 @@ export const Content = styled.div`
 
       &:hover {
           color: ${shade(0.2, '#ff9000')}
+      }
     }
 `;
 
