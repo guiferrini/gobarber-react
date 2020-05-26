@@ -23,6 +23,11 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest}) => {
 
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
+  /**Essa função é criada uma unica vez, independente d qtas vez eu atualize, mude o estado, propriedades... */
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
     /* se o input tem conteudo (true) => setIsFocused(true)
@@ -47,7 +52,9 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest}) => {
     <Container isFilled={isFilled} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
       <input
-        onFocus={() => {setIsFocused(true)}}
+        //essa função é recriada td vez q o componente renderiza, entao usar: useCallback
+        //onFocus={() => {setIsFocused(true)}}
+        onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
         ref={inputRef}
