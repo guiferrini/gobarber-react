@@ -3,6 +3,7 @@ import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
+import getValidationErrors from '../../Utils/getValitationErrors';
 
 import logo from '../../Assets/logo.svg';
 
@@ -15,6 +16,9 @@ const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(async (data: object) => {
+    //p validação ser feita do zero
+    formRef.current?.setErrors({});
+
     try {
       //p validar um obj inteiro cria um schema de validaçao
       const schema = Yup.object().shape({
@@ -30,9 +34,10 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
     } catch (err) {
-      formRef.current?.setErrors({
-        email: 'Nome Obrigatorio',
-      });
+      const errors = getValidationErrors(err);
+
+      formRef.current?.setErrors(errors);
+
     }
   }, []);
 
