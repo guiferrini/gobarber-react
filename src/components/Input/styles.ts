@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import Tooltip from '../Tooltip';
+
 interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
@@ -57,7 +59,8 @@ export const Container = styled.div<ContainerProps>`
   }
 `;
 
-export const Error = styled.div`
+//é como uma 'herança' de estilização, poderia fazer modo padrão, msm resultado
+export const Error = styled(Tooltip)`
   height: 20px;
   margin-left: 16px;
   svg {

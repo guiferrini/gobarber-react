@@ -4,6 +4,8 @@ import { IconBaseProps } from 'react-icons';
 import { FiAlertTriangle } from 'react-icons/fi'
 import { useField } from '@unform/core';
 
+import Tooltip from '../Tooltip';
+
 import { Container, Error } from './styles';
 
 // Cria Interface p trazer tds propriedades do Input do CSS p dentro do Componente Input
@@ -64,7 +66,8 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest}) => {
     />
 
     {error && (
-      <Error>
+      //poderia fazer do modo 'padrao' importando Tooltip
+      <Error title={error}>
         <FiAlertTriangle color="#c53030" size={20} />
       </Error>
     )}
