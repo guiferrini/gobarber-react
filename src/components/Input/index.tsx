@@ -1,8 +1,10 @@
 import React, { InputHTMLAttributes, useEffect, useRef, useState, useCallback } from 'react';
 
-import { Container } from './styles';
 import { IconBaseProps } from 'react-icons';
+import { FiAlertTriangle } from 'react-icons/fi'
 import { useField } from '@unform/core';
+
+import { Container, Error } from './styles';
 
 // Cria Interface p trazer tds propriedades do Input do CSS p dentro do Componente Input
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -49,19 +51,23 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest}) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
-      {Icon && <Icon size={20} />}
-      <input
-        //essa função é recriada td vez q o componente renderiza, entao usar: useCallback
-        //onFocus={() => {setIsFocused(true)}}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        defaultValue={defaultValue}
-        ref={inputRef}
-        {...rest}
-      />
+  <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
+    {Icon && <Icon size={20} />}
+    <input
+      //essa função é recriada td vez q o componente renderiza, entao usar: useCallback
+      //onFocus={() => {setIsFocused(true)}}
+      onFocus={handleInputFocus}
+      onBlur={handleInputBlur}
+      defaultValue={defaultValue}
+      ref={inputRef}
+      {...rest}
+    />
 
-      {error}
+    {error && (
+      <Error>
+        <FiAlertTriangle color="#c53030" size={20} />
+      </Error>
+    )}
   </Container>
   );
 };
