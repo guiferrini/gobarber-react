@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest}) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFilled={isFilled} isFocused={isFocused}>
+    <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
       <input
         //essa função é recriada td vez q o componente renderiza, entao usar: useCallback
