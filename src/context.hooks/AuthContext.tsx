@@ -14,6 +14,7 @@ interface SingInCredencials {
 interface AuthContextData {
   user: object;
   singIn(credencials: SingInCredencials): Promise<void>;
+  singOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>(
@@ -56,8 +57,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
+  const singOut = useCallback(() => {
+    localStorage.removeItem('@gobarber:token');
+    localStorage.removeItem('@gobarber:user');
+
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, singIn }}>
+    <AuthContext.Provider value={{ user: data.user, singIn, singOut }}>
       { children }
     </AuthContext.Provider>
   );
