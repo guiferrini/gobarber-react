@@ -4,7 +4,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import AuthContext from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import getValidationErrors from '../../Utils/getValitationErrors';
 
 import logo from '../../Assets/logo.svg';
@@ -17,9 +17,9 @@ import { Container, Content, Background } from './styles';
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const auth = useContext(AuthContext);
+  const { name } = useContext(AuthContext);
+  console.log(name);
 
-  console.log(auth);
 
   const handleSubmit = useCallback(async (data: object) => {
     //p validação ser feita do zero
