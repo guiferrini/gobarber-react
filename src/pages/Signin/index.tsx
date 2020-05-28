@@ -17,9 +17,7 @@ import { Container, Content, Background } from './styles';
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { name } = useContext(AuthContext);
-  console.log(name);
-
+  const { singIn } = useContext(AuthContext);
 
   const handleSubmit = useCallback(async (data: object) => {
     //p validação ser feita do zero
@@ -38,13 +36,17 @@ const SignIn: React.FC = () => {
         //para enviar tds os erros e não só o 1°
         abortEarly: false,
       });
+
+      singIn();
     } catch (err) {
       const errors = getValidationErrors(err);
 
       formRef.current?.setErrors(errors);
 
     }
-  }, []);
+  },
+  [singIn],
+);
 
   return (
     <Container>
