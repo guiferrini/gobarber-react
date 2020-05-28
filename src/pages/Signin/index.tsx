@@ -14,37 +14,45 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background } from './styles';
 
+interface SingInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { singIn } = useContext(AuthContext);
 
-  const handleSubmit = useCallback(async (data: object) => {
-    //p validação ser feita do zero
-    formRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: SingInFormData) => {
+      try {
+        //p validação ser feita do zero
+        formRef.current?.setErrors({});
+        //p validar um obj inteiro cria um schema de validaçao
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Email obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
 
-    try {
-      //p validar um obj inteiro cria um schema de validaçao
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('Email obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
+        await schema.validate(data, {
+          //para enviar tds os erros e não só o 1°
+          abortEarly: false,
+        });
 
-      await schema.validate(data, {
-        //para enviar tds os erros e não só o 1°
-        abortEarly: false,
-      });
+        singIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        const errors = getValidationErrors(err);
 
-      singIn();
-    } catch (err) {
-      const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
 
-      formRef.current?.setErrors(errors);
-
-    }
-  },
+      }
+    },
   [singIn],
 );
 
