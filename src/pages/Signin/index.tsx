@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../context.hooks/AuthContext';
+import { useToast } from '../../context.hooks/ToastContext';
 import getValidationErrors from '../../Utils/getValitationErrors';
 
 import logo from '../../Assets/logo.svg';
@@ -22,7 +23,9 @@ interface SingInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
+  //Hooks criados - tds componentes isolados
   const { singIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SingInFormData) => {
@@ -42,7 +45,7 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        singIn({
+        await singIn({
           email: data.email,
           password: data.password,
         });
@@ -52,10 +55,11 @@ const SignIn: React.FC = () => {
 
           formRef.current?.setErrors(errors);
         }
-        //dispara Toast
+
+        addToast();
       }
     },
-  [singIn],
+  [singIn, addToast],
 );
 
   return (
