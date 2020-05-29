@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { animated } from 'react-spring';
 
 interface ToasProps {
   type?: 'success' | 'error' | 'info';
@@ -28,7 +29,7 @@ const toastTypeVariations = {
   `
 };
 
-export const Toast = styled.div<ToasProps>`
+export const Toast = styled(animated.div)<ToasProps>`
   width: 360px;
 
   position: relative;

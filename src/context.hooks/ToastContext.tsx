@@ -2,7 +2,7 @@ import React, { createContext, useContext, useCallback, useState } from 'react';
 import { uuid } from 'uuidv4';
 
 import ToastContainer from '../components/ToastContainer';
-import { StyledInterface } from 'styled-components';
+import styled, { StyledInterface } from 'styled-components';
 
 export interface ToastMessage {
   id: string; //p identificar cada tipo de erro, por title pode confundir o tipo do erro
@@ -48,7 +48,7 @@ const ToastProvider: React.FC = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
       { children }
-      <ToastContainer messages={messages} />
+      <ToastContainer messages={messages} style={styled}/>
     </ToastContext.Provider>
   );
 }

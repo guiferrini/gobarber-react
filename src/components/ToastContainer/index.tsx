@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTransition } from 'react-spring';
 import { FiAlertTriangle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
 
 import { ToastMessage, useToast } from '../../context.hooks/ToastContext';
@@ -6,6 +7,7 @@ import { Container, Toast } from './styles';
 
 interface ToastContainerProps {
   messages: ToastMessage[];
+  style: object;
 }
 
 const icons = {
@@ -14,25 +16,36 @@ const icons = {
   success: <FiCheckCircle size={24} />,
 }
 
-const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+const ToastContainer: React.FC<ToastContainerProps> = ({ messages, style }) => {
   const { removeToast } = useToast()
 
+  const messagesWithTransitions = useTransition(
+    messages,
+    message => message.id,
+    {
+      from: { right:'-120%' },
+      enter: { right: '0%' },
+      leave: { right: '-120%' },
+    },
+  );
+
   return (
-    <Container>
-      {messages.map(message => (
+    <Container style={style}>
+      {messagesWithTransitions.map(({ item, key, props }) => (
         <Toast
-          key={message.id}
-          type={message.type}
-          hasDescription={!!message.description}
+          key={key}
+          type={item.type}
+          hasDescription={!!item.description}
+          style={props}
         >
-          {icons[message.type || 'info']}
+          {icons[item.type || 'info']}
 
           <div>
-            <strong>{message.title}</strong>
-            {message.description && <p>{message.description}</p>}
+            <strong>{item.title}</strong>
+            {item.description && <p>{item.description}</p>}
           </div>
 
-          <button onClick={() => removeToast(message.id)} type="button">
+          <button onClick={() => removeToast(item.id)} type="button">
             <FiXCircle size={18} />
           </button>
         </Toast>
