@@ -1,11 +1,17 @@
 import React from 'react';
-import { FiAlertTriangle, FiXCircle } from 'react-icons/fi'
+import { FiAlertTriangle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
 
 import { ToastMessage, useToast } from '../../context.hooks/ToastContext';
 import { Container, Toast } from './styles';
 
 interface ToastContainerProps {
   messages: ToastMessage[];
+}
+
+const icons = {
+  info: <FiInfo size={24} />,
+  error: <FiAlertTriangle size={24} />,
+  success: <FiCheckCircle size={24} />,
 }
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
@@ -19,7 +25,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
           type={message.type}
           hasDescription={!!message.description}
         >
-          <FiAlertTriangle size={18} />
+          {icons[message.type || 'info']}
 
           <div>
             <strong>{message.title}</strong>
