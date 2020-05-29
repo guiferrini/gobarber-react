@@ -5,17 +5,19 @@ import SignIn from './pages/Signin';
 import GlobalStyle from './sytles/global';
 
 import ToastContainer from './components/ToastContainer';
-import { AuthProvider } from './context.hooks/AuthContext';
+
+import AppProvider from './context.hooks/index';
 //AuthContext.provider -> tem q estar em volta de td o q será autenticado
 
 const App: React.FC = () => (
   <>
-    <AuthProvider>
+    <AppProvider>
       <SignIn />
-    </AuthProvider>
+    </AppProvider>
 
     <ToastContainer />
-      <GlobalStyle />
+
+    <GlobalStyle />
   </>
 );
 
