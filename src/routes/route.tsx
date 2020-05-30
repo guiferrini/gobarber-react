@@ -19,7 +19,7 @@ const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Component ,
   return (
     <ReactDOMRoute
       {...rest}
-      render={() => {
+      render={({ location }) => {
         //se é Privado e se existe user (isSigned) vai p /componente se não...
         //true/true or False/false => ok Component
         //true/False or False/True => Redirect to Login or Dashboard
@@ -27,7 +27,12 @@ const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Component ,
           <Component />
         ) : (
           // rota autenticada e não é usuaria autenticado vai p login se nao p dashboard
-          <Redirect to={{ pathname: isPrivate ? '/' : '/dashboard' }} />
+          <Redirect
+            to={{
+              pathname: isPrivate ? '/' : '/dashboard',
+              state: { from: location },
+            }}
+          />
         );
       }}
     />
